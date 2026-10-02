@@ -1,0 +1,20 @@
+<section class="recipe-card">
+  <img class="recipe-card__photo" [src]="photo" [alt]="recipeName">
+
+  <div class="recipe-card__body">
+    <h2 class="recipe-card__title">{{ recipeName }}</h2>
+
+    <h3 class="recipe-card__subheading">Інгредієнти</h3>
+    <ul class="recipe-card__ingredients">
+      <li *ngFor="let item of ingredients">
+        <span>{{ item.name }}</span>
+        <span class="recipe-card__amount">{{ item.amount }}</span>
+      </li>
+    </ul>
+
+    <h3 class="recipe-card__subheading">Приготування</h3>
+    <ol class="recipe-card__steps">
+      <li *ngFor="let step of steps">{{ step }}</li>
+    </ol>
+  </div>
+</section>

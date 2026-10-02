@@ -1,0 +1,141 @@
+<div class="exercises">
+  <header class="page-heading">
+    <p class="eyebrow">Практика Angular</p>
+    <h1>Інструменти та каталог</h1>
+    <p class="intro">Pipe-и, керування шаблоном і двостороннє зв’язування даних.</p>
+  </header>
+
+  <section class="tool-grid" aria-label="Навчальні інструменти">
+    <article class="panel">
+      <p class="eyebrow">Pipe 01</p>
+      <h2>Зсув літер</h2>
+      <label for="password-input">Текст для перетворення</label>
+      <input id="password-input" type="text" [(ngModel)]="password" />
+      <p class="output-label">Результат</p>
+      <output class="output-value">{{ password | passwordHash }}</output>
+      <p class="note">Навчальний шифр зі зсувом на 3 літери, не для захисту реальних паролів.</p>
+    </article>
+
+    <article class="panel">
+      <p class="eyebrow">Pipe 02</p>
+      <h2>Температура</h2>
+      <label for="temperature-input">Температура</label>
+      <input id="temperature-input" type="number" [(ngModel)]="temperature" />
+      <div class="unit-row">
+        <label>З
+          <select aria-label="Початкова одиниця" [(ngModel)]="fromUnit">
+            <option value="C">°C</option>
+            <option value="F">°F</option>
+          </select>
+        </label>
+        <span aria-hidden="true">→</span>
+        <label>У
+          <select aria-label="Кінцева одиниця" [(ngModel)]="toUnit">
+            <option value="C">°C</option>
+            <option value="F">°F</option>
+          </select>
+        </label>
+      </div>
+      <p class="output-label">Результат</p>
+      <output class="output-value">
+        {{ temperature | temperatureConvert: fromUnit : toUnit }}°{{ toUnit }}
+      </output>
+    </article>
+
+    <article class="panel calculator">
+      <p class="eyebrow">Двостороннє зв’язування</p>
+      <h2>Калькулятор</h2>
+      <div class="calculator-fields">
+        <label for="first-number">Перше число
+          <input id="first-number" type="number" [(ngModel)]="firstNumber" />
+        </label>
+        <label for="operation">Операція
+          <select id="operation" [(ngModel)]="operation">
+            <option value="+">Додавання (+)</option>
+            <option value="-">Віднімання (−)</option>
+            <option value="×">Множення (×)</option>
+            <option value="÷">Ділення (÷)</option>
+          </select>
+        </label>
+        <label for="second-number">Друге число
+          <input id="second-number" type="number" [(ngModel)]="secondNumber" />
+        </label>
+      </div>
+      <p class="result-line">Результат <output>{{ result ?? 'Введіть обидва числа' }}</output></p>
+    </article>
+  </section>
+
+  <section class="catalog" aria-labelledby="catalog-title">
+    <div class="catalog-heading">
+      <div>
+        <p class="eyebrow">Магазин</p>
+        @switch (selectedCategory) {
+          @case ('Електроніка') {
+            <h2 id="catalog-title">Електроніка</h2>
+            <div class="product-grid">
+              @for (product of products; track product.id) {
+                @if (product.category === selectedCategory) {
+                  <article class="product-row">
+                    <div><h3>{{ product.name }}</h3><p>{{ product.category }}</p></div>
+                    <strong>{{ product.price }} ₴</strong>
+                  </article>
+                }
+              }
+            </div>
+          }
+          @case ('Одяг') {
+            <h2 id="catalog-title">Одяг</h2>
+            <div class="product-grid">
+              @for (product of products; track product.id) {
+                @if (product.category === selectedCategory) {
+                  <article class="product-row">
+                    <div><h3>{{ product.name }}</h3><p>{{ product.category }}</p></div>
+                    <strong>{{ product.price }} ₴</strong>
+                  </article>
+                }
+              }
+            </div>
+          }
+          @case ('Аксесуари') {
+            <h2 id="catalog-title">Аксесуари</h2>
+            <div class="product-grid">
+              @for (product of products; track product.id) {
+                @if (product.category === selectedCategory) {
+                  <article class="product-row">
+                    <div><h3>{{ product.name }}</h3><p>{{ product.category }}</p></div>
+                    <strong>{{ product.price }} ₴</strong>
+                  </article>
+                }
+              }
+            </div>
+          }
+          @default {
+            <h2 id="catalog-title">Усі товари</h2>
+            <div class="product-grid">
+              @for (product of products; track product.id) {
+                @if (selectedCategory === 'Усі' || product.category === selectedCategory) {
+                  <article class="product-row">
+                    <div><h3>{{ product.name }}</h3><p>{{ product.category }}</p></div>
+                    <strong>{{ product.price }} ₴</strong>
+                  </article>
+                }
+              } @empty {
+                <p class="empty-state">Товарів поки немає.</p>
+              }
+            </div>
+          }
+        }
+      </div>
+      <div class="category-tabs" role="group" aria-label="Категорія товарів">
+        @for (category of categories; track category) {
+          <button
+            type="button"
+            [class.selected]="selectedCategory === category"
+            [attr.aria-pressed]="selectedCategory === category"
+            (click)="selectedCategory = category"
+          >{{ category }}</button>
+        }
+      </div>
+    </div>
+  </section>
+</div>
